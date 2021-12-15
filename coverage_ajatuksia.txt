@@ -1,0 +1,24 @@
+
+Suuntaviivoja:
+
+"extractheaders"
+
+FASTA headerit löytyy puhdilta: 
+/scratch/project_2001960/indexes/bt2VirosaurusIndices/virosaurus90_humanViruses_headers.txt
+
+Tässä ajatuksena on siis hakea virosauruksen accessioneista kaikki esiintymät, joissa merkkijono esiintyy.
+Nämä headerit on kuitenkin vähän eri muodossa kuin linjaustiedostoissa, joten niitä täytyy hieman muokata.
+Tätä hommaa hoitaa "geneNames" python-skripti.
+
+Sitten linjattu tiedosto pitäisi saattaa SAM-formaattiin ja sieltä tulisi filtteröidä halutut readit.
+esim näin:
+
+# filter desired accession $1 is file name $2 is accession id
+samtools view $1 $2 > output.sam
+
+Lopuksi python-skripti, jonka aluksi alustetaan lista, joka kyseisen referenssin kokoinen ja arvot nolliksi.
+Sitten käydään skriptissä filtteröidyt readit rivi riviltä läpi ja selvitetään readin peittämät koordinaatit.
+-> Päivitetään indeksit listassa +1.
+
+Kirjoitetaan lista tekstitiedostoon ja luetaan vektoriksi R:ssa. 
+Lopuksi visualisointi barplot():illa.

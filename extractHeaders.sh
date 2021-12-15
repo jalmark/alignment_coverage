@@ -1,19 +1,16 @@
 #!/bin/bash
 
-# Output file name as first parameter
-# USAGE: Give accessions as command line parameters
-# Will result in text file that contains all fasta-headers for these accessions
+# Jalmari Kettunen 15.12.2021
+# USAGE: Give 1) NCBI accession ID of the interesting virus genome and 2) BAM file of interesting sample (full path) as parameters of this Bash script.
 
 
-args=$#
-
+#args=$#
 # create output file
-touch temp.txt
-
-for (( i=3; i<=$args; i+=1 ))    # loop from 1 to N (where N is number of args)
-do
-    grep ${!i} /scratch/project_2001960/indexes/bt2VirosaurusIndices/virosaurus90_humanViruses_headers.txt >> temp.txt
-done
+#touch temp.txt
+#for (( i=3; i<=$args; i+=1 ))    # loop from 1 to N (where N is number of args)
+#do
+grep $1 /mnt/c/Users/-/Documents/postGradu/GTEx/Joulu20pipelineUusinta/referenssigenomit/virosaurus90_headers.txt > temp.txt
+#done
 
 
 python3 geneNames.py temp.txt $1
@@ -21,11 +18,11 @@ python3 geneNames.py temp.txt $1
 rm temp.txt
 
 while read line; do
-    echo $line
-    # Processing coverage of header $line
-    # filter reads
-    samtools view $2 $line > output.sam
-    python3 singleCoverage.py $line output.sam
-
+	echo $2
+	# Processing coverage of header $line
+	# Filter reads.
+	samtools view $1 $2 > output.sam
+	python3 reads.py $1 $2 output.sam
+	rm output.sam
 
 done < $1

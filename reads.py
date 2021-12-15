@@ -2,9 +2,31 @@
 import sys
 
 def main():
-	reads = [0] * int(sys.argv[2])
+	reads = [0] * int(sys.argv[1])
 
-	data = open(sys.argv[1], "r")
+	# Tiedosto geneNames.py alkaa:
+	inFile = open()
+
+	outFile = open(sys.argv[2],"w")
+
+	for row in inFile:
+
+		rowList = row.split(';')
+
+		# Remove first > and add trailing ;
+		resString = rowList[0]
+		resString = resString[1:]
+		resString = resString + ";"
+
+		#print(resString)
+		outFile.write(resString)
+		outFile.write("\n")
+
+		inFile.close()
+		outFile.close()
+	# Tiedosto geneNames.py päättyy.
+
+	data = open(sys.argv[3], "r")
 
 	for i in data:
 

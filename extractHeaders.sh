@@ -4,7 +4,6 @@
 # USAGE: Give accessions as command line parameters
 # Will result in text file that contains all fasta-headers for these accessions
 
-module load biokit
 
 args=$#
 
@@ -30,4 +29,3 @@ while read line; do
 
 
 done < $1
-

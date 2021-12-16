@@ -4,7 +4,8 @@
 # This Python script takes 2 arguments:
 # 1) Name of file that has Virosaurus 90 FASTA headers in it.
 # 2) NCBI accession ID of the interesting virus genome. Will be in the name of the output file.
-# This script cleans those FASTA headers into needed format and writes them in the output file.
+# This script transforms those FASTA headers into needed format and writes them in the output file.
+# Name of the output file is {accession_ID}.txt.
 
 import sys
 

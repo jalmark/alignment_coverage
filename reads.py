@@ -4,6 +4,7 @@
 # This Python script takes 2 arguments:
 # 1) Length of wanted NCBI virus reference genome (give as integer).
 # 2) Name of SAM file. In there, reference genomes has a common prefix (e.g. NC_12345).
+# 3) Name of original BAM file (full path).
 # Output is a file that has a single column: number of reads in each position.
 # Its length is the given length of virus reference genome.
 
@@ -13,19 +14,19 @@ def main():
 	# Create zero vector, length is the given reference genome length.
 	reference = [0] * int(sys.argv[1])
 	data = open(sys.argv[2], "r")
-	refName = str(sys.argv[2]).rstrip(".sam")
+	job = "_in_".join( [str(sys.argv[2]).rstrip(".sam"), str(sys.argv[3]).rstrip(".bam").split("/")[-1]] )
 
 	for i in data:
 
 		row = i.split("\t")
 		splitRefName = row[2].split(":")
 
-		# If Virosaurus virus species consists of multiple reference seqs, move start position accordingly.
+		# If Virosaurus virus species consists of multiple reference seqs, move start position by gene start coordinate.
 		if splitRefName[1].startswith("GENE_"):
-			geneStart = splitRefName[1].split("_","-")[1]
+			geneStart = splitRefName[1].split("_")[1].split("-")[0]
 			start = int(row[3]) + int(geneStart)
 			end = start + int(len(row[9]))
-		# If not, naively assume perfect linear alignment.
+		# Naively assume perfect linear alignment.
 		else:
 			start = int(row[3])
 			end = start + int(len(row[9]))
@@ -34,7 +35,7 @@ def main():
 			reference[j] = reference[j]+1
 
 
-	with open(refName + "_data_out.txt", "w") as fileOut:
+	with open(job + ".txt", "w") as fileOut:
 		for item in reference:
 			fileOut.write("%d\n" %item)
 

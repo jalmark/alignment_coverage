@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Jalmari Kettunen 15.12.2021
+# Jalmari Kettunen 16.12.2021
 # This Python script takes 2 arguments:
 # 1) Name of file that has Virosaurus 90 FASTA headers in it.
 # 2) NCBI accession ID of the interesting virus genome. Will be in the name of the output file.
